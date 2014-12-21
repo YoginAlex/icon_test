@@ -62,29 +62,55 @@ iconApp.controller('IconCtrl', function ($scope) {
         svg: '<?xml version="1.0" encoding="utf-8"?><!-- Generator: Adobe Illustrator 17.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  --><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd"><svg version="1.0" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width=32 height=32 viewBox="0 0 32 32" style="enable-background:new 0 0 26 26;" xml:space="preserve"><path d="M25.898,13.822c-5.769,4.304-7.057,9.267-8.216,11.561c-0.33,0.654-1.069,0.656-1.507,0.109c-0.426-0.533-1.179-2.21-4.063-3.521c-1.119-0.508-0.563-1.535-0.563-1.535l0.773-1.127v0c0,0,0.474-0.766,1.783-0.239c1.503,0.607,2.814,2.6,2.814,2.6S19.038,16.312,25.898,13.822z M9.564,21.96c-0.396-1.18,0.073-2.194,0.227-2.478 c0.033-0.061,0.069-0.121,0.109-0.178l0.758-1.106c0.427-0.646,1.319-1.313,2.599-1.313c0.515,0,1.052,0.111,1.595,0.33c0.641,0.259,1.229,0.656,1.739,1.09c0.298-0.408,0.66-0.849,1.061-1.299c-1.159-0.666-2.493-1.24-3.767-1.668c-0.151-0.051-1.105-0.488-0.51-2.328h-0.008c1.555-1.625,2.586-4.242,2.586-6.818c0-3.959-2.438-6.035-5.452-6.035 c-3.017,0-5.438,2.076-5.438,6.035c0,2.586,1.024,5.213,2.588,6.836c0.609,1.623-0.48,2.225-0.709,2.311c-3.156,1.158-6.86,3.271-6.86,5.357c0,0.563,0,0.223,0,0.781c0,2.842,5.427,3.488,10.45,3.488c0.85,0,1.708-0.02,2.549-0.064 c-0.436-0.369-1.009-0.751-1.798-1.11C10.206,23.302,9.754,22.525,9.564,21.96z"/></svg>'
     };
 
-    var style = "<style> \
-            svg * { \
-                transition: fill .1s ease-out, opacity .1s ease-out; \
-                background-size: cover; \
-                background-repeat: no-repeat; \
-            } \
-            @media all and (min-width: 100px) and (max-width: 250px) { \
-                #group_0 { \
-                    display: none; \
-                } \
-                #group_1 { \
-                    display: none; \
-                } \
-            } \
-            @media all and (min-width: 251px) and (max-width: 350px) { \
-                #group_0 { \
-                    display: none; \
-                } \
-                #group_1 { \
-                    display: none; \
-                } \
-            } \
-        </style>";
+    //var style = "<style> \
+    //        svg * { \
+    //            transition: fill .1s ease-out, opacity .1s ease-out; \
+    //            background-size: cover; \
+    //            background-repeat: no-repeat; \
+    //        } \
+    //        @media all and (min-width: 100px) and (max-width: 250px) { \
+    //            #group_0 { \
+    //                display: none; \
+    //            } \
+    //            #group_1 { \
+    //                display: none; \
+    //            } \
+    //        } \
+    //        @media all and (min-width: 251px) and (max-width: 350px) { \
+    //            #group_0 { \
+    //                display: none; \
+    //            } \
+    //            #group_1 { \
+    //                display: none; \
+    //            } \
+    //        } \
+    //    </style>";
+
+    var style = '<style> ' +
+            'svg * { ' +
+                'transition: fill .1s ease-out, opacity .1s ease-out; ' +
+                'background-size: cover; ' +
+                'background-repeat: no-repeat; ' +
+            '} ' +
+            '@media all and (min-width: 100px) and (max-width: 250px) { ' +
+                '#group_0 { ' +
+                    'display: none; ' +
+                '} ' +
+                '#group_1 { ' +
+                    'display: none; ' +
+                '} ' +
+            '} ' +
+            '@media all and (min-width: 251px) and (max-width: 350px) { ' +
+                '#group_0 { ' +
+                    'display: none; ' +
+                '} ' +
+                '#group_1 { ' +
+                    'display: none; ' +
+                '} ' +
+            '} ' +
+        '</style>';
+
+
 
     icon_svg = getSvgStr(icon, options);
     icon_svg_xml = $.parseXML(icon_svg);
@@ -106,7 +132,7 @@ iconApp.controller('IconCtrl', function ($scope) {
     //$empty_svg
     var empty_svg = icons[0].cloneNode(true);
     $(empty_svg).find('svg').empty();
-    //$(empty_svg).find('svg').append(style);
+    $(empty_svg).find('svg').append(style);
     //console.log($(empty_svg).find('svg'));
     angular.forEach(icons, function(value, key){
         var wrapped_child = '<g id="group_' + key + '">' + $(value).children().html() + '</g>';
@@ -123,5 +149,5 @@ iconApp.controller('IconCtrl', function ($scope) {
 
     //console.log($scope.icons[0]);
     //$('#res-icon').append($scope.icons[0].svg).html();
-    //$('#res-icon').append(icon_group_str);
+    $('#res-icon').append(icon_group_str);
 });
