@@ -94,18 +94,18 @@ iconApp.controller('IconCtrl', function ($scope) {
             '} ' +
             '@media all and (min-width: 100px) and (max-width: 250px) { ' +
                 '#group_0 { ' +
-                    'display: none; ' +
+                    'opacity: 0; ' +
                 '} ' +
                 '#group_1 { ' +
-                    'display: none; ' +
+                    'opacity: 1; ' +
                 '} ' +
             '} ' +
             '@media all and (min-width: 251px) and (max-width: 350px) { ' +
                 '#group_0 { ' +
-                    'display: none; ' +
+                    'opacity: 1; ' +
                 '} ' +
                 '#group_1 { ' +
-                    'display: none; ' +
+                    'opacity: 0; ' +
                 '} ' +
             '} ' +
         '</style>';
@@ -134,24 +134,38 @@ iconApp.controller('IconCtrl', function ($scope) {
     $(empty_svg).find('svg').empty();
     $(empty_svg).find('svg').append(style);
     //console.log($(empty_svg).find('svg'));
+    //console.log(new XMLSerializer().serializeToString(empty_svg));
     angular.forEach(icons, function(value, key){
         var wrapped_child = '<g id="group_' + key + '">' + $(value).children().html() + '</g>';
+        //console.log(wrapped_child);
         //var wrapped_child = $(value).children().html();
         //console.log($.parseXML(wrapped_child));
         //wrapped_child_xml = $.parseXML(wrapped_child);
         //$(wrapped_child_xml).appendTo($(empty_svg).find('svg'));
-        $(empty_svg).find('svg').append($(wrapped_child));
+        $(empty_svg).find('svg').append(wrapped_child);
         //console.log(empty_svg);
 
     });
 
-    var icon_group_str = new XMLSerializer().serializeToString(empty_svg);
+    //var nnxmlns = $(empty_svg).find('svg').attr('xmlns');
 
+
+    var icon_group_str = new XMLSerializer().serializeToString(empty_svg);
+    console.log(icon_group_str);
     //console.log($scope.icons[0]);
     //$('#res-icon').append($scope.icons[0].svg).html();
     //$('#res-icon').append('');
     var base64_icons = 'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz48IURPQ1RZUEUgc3ZnIFBVQkxJQyAiLS8vVzNDLy9EVEQgU1ZHIDEuMC8vRU4iICJodHRwOi8vd3d3LnczLm9yZy9UUi8yMDAxL1JFQy1TVkctMjAwMTA5MDQvRFREL3N2ZzEwLmR0ZCI+PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB2ZXJzaW9uPSIxLjAiIHg9IjBweCIgeT0iMHB4IiB2aWV3Qm94PSIwIDAgMzIgMzIiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDI1LjczMSAyNS42NTc7Ij4gICAgPHN0eWxlPiAgICAgICAgc3ZnICogeyAgICAgICAgdHJhbnNpdGlvbjogZmlsbCAuMXMgZWFzZS1vdXQsIG9wYWNpdHkgLjFzIGVhc2Utb3V0OyAgICAgICAgYmFja2dyb3VuZC1zaXplOiBjb3ZlcjsgICAgICAgIGJhY2tncm91bmQtcmVwZWF0OiBuby1yZXBlYXQ7ICAgICAgICB9ICAgICAgICBAbWVkaWEgYWxsIGFuZCAobWluLXdpZHRoOiAxMDBweCkgYW5kIChtYXgtd2lkdGg6IDI1MHB4KSB7ICAgICAgICAgICAgI2dyb3VwXzAgeyAgICAgICAgICAgIG9wYWNpdHk6IDE7ICAgICAgICAgICAgfSAgICAgICAgICAgICNncm91cF8xIHsgICAgICAgICAgICBvcGFjaXR5OiAwOyAgICAgICAgICAgIH0gICAgICAgIH0gICAgICAgIEBtZWRpYSBhbGwgYW5kIChtaW4td2lkdGg6IDI1MXB4KSBhbmQgKG1heC13aWR0aDogMzUwcHgpIHsgICAgICAgICAgICAjZ3JvdXBfMCB7ICAgICAgICAgICAgb3BhY2l0eTogMDsgICAgICAgICAgICB9ICAgICAgICAgICAgI2dyb3VwXzEgeyAgICAgICAgICAgIG9wYWNpdHk6IDE7ICAgICAgICAgICAgfSAgICAgICAgfSAgICA8L3N0eWxlPiAgICA8ZyBpZD0iZ3JvdXBfMCI+ICAgIDxwYXRoIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgZD0iTTE5LjQxOCwxMy4wMzFjLTMuNDg2LDAtNi4zMTMsMi44MjYtNi4zMTMsNi4zMTNzMi44MjYsNi4zMTMsNi4zMTMsNi4zMTNzNi4zMTMtMi44MjYsNi4zMTMtNi4zMTNTMjIuOTA0LDEzLjAzMSwxOS40MTgsMTMuMDMxeiBNMjIuOTAxLDIwLjI0MWgtNi45Nzh2LTEuNzkzaDYuOTc4VjIwLjI0MXogTTExLjYwNiwxOS4zNDNjMCwyLjA3NCwwLjgxNCwzLjk1NCwyLjEzMyw1LjM1NGMtMS4wNzMsMC4wNzgtMi4xODcsMC4xMTEtMy4yODksMC4xMTFDNS40MjcsMjQuODA4LDAsMjQuMTYyLDAsMjEuMzJjMC0wLjU1OCwwLTAuMjE4LDAtMC43ODFjMC0yLjA4NiwzLjcwNC00LjE5OSw2Ljg2LTUuMzU3YzAuMjI5LTAuMDg2LDEuMzE4LTAuNjg4LDAuNzA5LTIuMzExYy0xLjU2NC0xLjYyMy0yLjU4OC00LjI1LTIuNTg4LTYuODM2QzQuOTgxLDIuMDc2LDcuNDAyLDAsMTAuNDE5LDBjMy4wMTQsMCw1LjQ1MiwyLjA3Niw1LjQ1Miw2LjAzNWMwLDIuNTc2LTEuMDMxLDUuMTkzLTIuNTg2LDYuODE4aDAuMDA4Yy0wLjI3MywwLjg0My0wLjIxNCwxLjM4Mi0wLjA2MywxLjczNEMxMi4yMTUsMTUuOTA1LDExLjYwNiwxNy41NTIsMTEuNjA2LDE5LjM0M3oiPjwvcGF0aD48L2c+ICAgIDxnIGlkPSJncm91cF8xIj48cGF0aCB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGQ9Ik0yNS44OTgsMTMuODIyYy01Ljc2OSw0LjMwNC03LjA1Nyw5LjI2Ny04LjIxNiwxMS41NjFjLTAuMzMsMC42NTQtMS4wNjksMC42NTYtMS41MDcsMC4xMDljLTAuNDI2LTAuNTMzLTEuMTc5LTIuMjEtNC4wNjMtMy41MjFjLTEuMTE5LTAuNTA4LTAuNTYzLTEuNTM1LTAuNTYzLTEuNTM1bDAuNzczLTEuMTI3djBjMCwwLDAuNDc0LTAuNzY2LDEuNzgzLTAuMjM5YzEuNTAzLDAuNjA3LDIuODE0LDIuNiwyLjgxNCwyLjZTMTkuMDM4LDE2LjMxMiwyNS44OTgsMTMuODIyeiBNOS41NjQsMjEuOTZjLTAuMzk2LTEuMTgsMC4wNzMtMi4xOTQsMC4yMjctMi40NzggYzAuMDMzLTAuMDYxLDAuMDY5LTAuMTIxLDAuMTA5LTAuMTc4bDAuNzU4LTEuMTA2YzAuNDI3LTAuNjQ2LDEuMzE5LTEuMzEzLDIuNTk5LTEuMzEzYzAuNTE1LDAsMS4wNTIsMC4xMTEsMS41OTUsMC4zM2MwLjY0MSwwLjI1OSwxLjIyOSwwLjY1NiwxLjczOSwxLjA5YzAuMjk4LTAuNDA4LDAuNjYtMC44NDksMS4wNjEtMS4yOTljLTEuMTU5LTAuNjY2LTIuNDkzLTEuMjQtMy43NjctMS42NjhjLTAuMTUxLTAuMDUxLTEuMTA1LTAuNDg4LTAuNTEtMi4zMjhoLTAuMDA4YzEuNTU1LTEuNjI1LDIuNTg2LTQuMjQyLDIuNTg2LTYuODE4YzAtMy45NTktMi40MzgtNi4wMzUtNS40NTItNi4wMzUgYy0zLjAxNywwLTUuNDM4LDIuMDc2LTUuNDM4LDYuMDM1YzAsMi41ODYsMS4wMjQsNS4yMTMsMi41ODgsNi44MzZjMC42MDksMS42MjMtMC40OCwyLjIyNS0wLjcwOSwyLjMxMWMtMy4xNTYsMS4xNTgtNi44NiwzLjI3MS02Ljg2LDUuMzU3YzAsMC41NjMsMCwwLjIyMywwLDAuNzgxYzAsMi44NDIsNS40MjcsMy40ODgsMTAuNDUsMy40ODhjMC44NSwwLDEuNzA4LTAuMDIsMi41NDktMC4wNjQgYy0wLjQzNi0wLjM2OS0xLjAwOS0wLjc1MS0xLjc5OC0xLjExQzEwLjIwNiwyMy4zMDIsOS43NTQsMjIuNTI1LDkuNTY0LDIxLjk2eiI+PC9wYXRoPjwvZz4gICAgPC9zdmc+';
 
-    $('#res-icon-img').attr('src', base64_icons);
+    //var Base64 = require('./base64.js').Base64;
+    var to_encode = '<?xml version="1.0" encoding="utf-8"?><!-- Generator: Adobe Illustrator 17.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  --><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">' + icon_group_str;
+    var l_base64_icons = 'data:image/svg+xml;base64,' + Base64.encode(to_encode);
+
+    //console.log(Base64.decode(Base64.encode(to_encode)));
+    $('#res-icon-img').attr('src', l_base64_icons);
+
+    //console.log(icon_group_str);
+    //console.log(Base64.encode(icon_group_str));
+    //console.log(icon_group_str);
 
 });
