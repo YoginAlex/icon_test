@@ -149,5 +149,5 @@ iconApp.controller('IconCtrl', function ($scope) {
 
     //console.log($scope.icons[0]);
     //$('#res-icon').append($scope.icons[0].svg).html();
-    $('#res-icon').append(icon_group_str);
+    //$('#res-icon').append(icon_group_str);
 });
